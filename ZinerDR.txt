@@ -1,0 +1,1928 @@
+local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/eeeiqjjj/WindUI/main/dist/main.lua"))()
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Window = WindUI:CreateWindow({
+    Folder = "Ziner Hub",
+    Title = "Ziner Hub",
+    Icon = "star",
+    Author = "Ziner Hub make by Kaibeo",
+    Theme = "Valentine",
+    Size = UDim2.fromOffset(620, 460),
+    HasOutline = true,
+})
+
+Window:EditOpenButton({
+    Title = "Open Ziner Hub",
+    Icon = "pointer",
+    CornerRadius = UDim.new(0, 6),
+    StrokeThickness = 2,
+    Color = ColorSequence.new(Color3.fromRGB(200, 0, 255), Color3.fromRGB(0, 200, 255)),
+    Draggable = true,
+    OnlyMobile = false,
+})
+
+local Sections = {
+    Home = Window:Section({
+        Title = "Home",
+        Icon = "star",
+        Opened = true,
+    }),
+    Features = Window:Section({
+        Title = "Features",
+        Icon = "package",
+        Opened = true,
+    }),
+}
+
+local Tabs = {
+    Home = Sections.Home:Tab({
+        Title = "Home",
+        Icon = "star",
+        Desc = "Info & Settings",
+        ShowTabTitle = true
+    }),
+    Main = Sections.Features:Tab({
+        Title = "Main",
+        Icon = "star",
+        Desc = "Main Features",
+        ShowTabTitle = true
+    }),
+    Teleport = Sections.Features:Tab({
+        Title = "Teleport",
+        Icon = "rocket",
+        Desc = "Teleport Features",
+        ShowTabTitle = true
+    }),
+    Other = Sections.Features:Tab({
+        Title = "Other Features",
+        Icon = "package",
+        Desc = "Bring Features",
+        ShowTabTitle = true
+    }),
+    Towns = Sections.Features:Tab({
+        Title = "Towns",
+        Icon = "skull",
+        Desc = "Combat Features",
+        ShowTabTitle = true
+    }),
+    Bypass = Sections.Features:Tab({
+        Title = "Bring Items",
+        Icon = "gift",
+        Desc = "Misc Features",
+        ShowTabTitle = true
+    }),
+    Esp = Sections.Features:Tab({
+        Title = "ESP",
+        Icon = "eye",
+        Desc = "ESP Features",
+        ShowTabTitle = true
+    }),
+    Credits = Sections.Features:Tab({
+        Title = "Credits",
+        Icon = "award",
+        Desc = "Credits",
+        ShowTabTitle = true
+    }),
+    Video = Sections.Features:Tab({
+        Title = "Content Creators",
+        Icon = "youtube",
+        Desc = "Videos",
+        ShowTabTitle = true
+    })
+}
+
+Tabs.Home:Paragraph({
+    Title = "Open UI IN PC",
+    Desc = "PRESS G in your keyboard to open the ui in pc if it disappears when minimizing the ui",
+    Color = "Green",
+    Locked = false,
+})
+
+
+Window:CreateTopbarButton(
+    "DiscordYTButton",
+    "youtube",
+    function()
+        WindUI:Notify({
+            Title = "Discord Server",
+            Content = "Please join the official discord server for more scripts! If you're a content creator, make a video on this script and we will post it",
+            Duration = 9,
+            Icon = "youtube"
+        })
+    end,
+    990
+)
+
+
+local Services = {
+    HttpService = game:GetService("HttpService"),
+    Players = game:GetService("Players")
+}
+
+local success, Response = pcall(function()
+    return Services.HttpService:JSONDecode(WindUI.Creator.Request({
+        Url = "https://discord.com/api/v10/invites/ringta?with_counts=true&with_expiration=true",
+        Method = "GET",
+        Headers = {
+            ["User-Agent"] = "RobloxBot/1.0",
+            ["Accept"] = "application/json"
+        }
+    }).Body)
+end)
+
+if success and Response and Response.guild then
+    Tabs.Home:Paragraph({
+        Title = Response.guild.name,
+        Desc =
+            '<font color="#52525b">â€¢</font> Members: ' .. tostring(Response.approximate_member_count) ..
+            '\n<font color="#16a34a">â€¢</font> Online: ' .. tostring(Response.approximate_presence_count),
+        Thumbnail = "rbxassetid://131915027058214",
+        ImageSize = 34,
+        Buttons = {
+            {
+                Title = "Discord",
+                Icon = "message-circle",
+                Callback = function()
+                    setclipboard("https://discord.gg/sKeDcKDwhZ")
+                    WindUI:Notify({
+                        Title = "Invite Copied",
+                        Content = "Discord Invite has been copied to your clipboard!",
+                        Icon = "square-arrow-out-up-right",
+                        Duration = 10
+                    })
+                end,
+            },
+            {
+                Title = "Youtube",
+                Icon = "youtube",
+                Callback = function()
+                    setclipboard("node")
+                    WindUI:Notify({
+                        Title = "Link Copied",
+                        Content = "Youtube Link has been copied to your clipboard!",
+                        Icon = "square-arrow-out-up-right",
+                        Duration = 10
+                    })
+                end,
+            }
+        }
+    })
+else
+    Tabs.Home:Paragraph({
+        Title = "Discord",
+        Desc = "Failed to load Discord data.\nYour executor may not support everything in this script since it's a low executor.",
+        Thumbnail = "rbxassetid://131915027058214",
+        ImageSize = 34,
+        Buttons = {
+            {
+                Title = "Discord",
+                Icon = "message-circle",
+                Callback = function()
+                    setclipboard("https://discord.gg/sKeDcKDwhZ")
+                    WindUI:Notify({
+                        Title = "Invite Copied",
+                        Content = "Discord Invite has been copied to your clipboard!",
+                        Icon = "square-arrow-out-up-right",
+                        Duration = 10
+                    })
+                end,
+            },
+            {
+                Title = "Youtube",
+                Icon = "youtube",
+                Callback = function()
+                    setclipboard("nope")
+                    WindUI:Notify({
+                        Title = "Link Copied",
+                        Content = "Youtube Link has been copied to your clipboard!",
+                        Icon = "square-arrow-out-up-right",
+                        Duration = 10
+                    })
+                end,
+            }
+        }
+    })
+end
+
+
+
+
+
+Tabs.Home:Section({
+    Title = "Window",
+    TextXAlignment = "Left",
+    TextSize = 17,
+    Icon = "app-window-mac"
+})
+
+local Themes = {}
+
+for Name, _ in pairs(WindUI:GetThemes()) do
+    table.insert(Themes, Name)
+end
+
+Tabs.Home:Dropdown({
+    Title = "Theme",
+    Multi = false,
+    AllowNone = false,
+    Value = "Valentine",
+    Values = Themes,
+    Callback = function(v)
+        WindUI:SetTheme(v)
+    end
+})
+
+Tabs.Home:Toggle({
+    Title = "Transparency",
+    Icon = "palette",
+    Value = WindUI:GetTransparency(),
+    Callback = function(v)
+        Window:ToggleTransparency(v)
+    end
+})
+
+
+Tabs.Home:Paragraph({
+    Title = "CONTENT CREATOR",
+    Desc = "if you upload a video on this script and dm Kaibeo in discord you will get the content creator role and your video will be published in a showcase channel which can get you free views + you get access to 2 cool private channels the video DOES NOT HAVE TO GET ALOT OF VIEWS AND YOU don't need a lot of subs just make a good video and put some effort in and your good (: ",
+    Color = "Green",
+    Locked = false,
+})
+
+Window:SetToggleKey(Enum.KeyCode.G)
+
+
+local MainTab = Tabs.Main
+
+local HttpService = game:GetService("HttpService")
+local everythingJsonUrl = "https://raw.githubusercontent.com/weuuw82/allthings/refs/heads/main/everything.json"
+local everything = {}
+
+local success, data = pcall(function()
+    return HttpService:JSONDecode(game:HttpGet(everythingJsonUrl))
+end)
+if success and type(data) == "table" then
+    everything = data
+end
+_G.EVERYTHING = everything
+
+
+
+
+-- Auto Hit
+
+
+local autohitActive = false
+local autohitConnections = {}
+local firing = false
+local currentTask = nil
+local autohitKey = Enum.KeyCode.H
+local guiVisible = false
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "AutoHitGui"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local button = Instance.new("TextButton")
+button.Name = "AutoHitButton"
+button.Size = UDim2.new(0, 30, 0, 30)
+button.Position = UDim2.new(1, -40, 0, 10)
+button.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+button.Text = "OFF"
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.TextSize = 10
+button.Font = Enum.Font.SourceSansBold
+button.Parent = screenGui
+button.Visible = false
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 6)
+corner.Parent = button
+
+local function updateButtonVisual()
+    if autohitActive then
+        button.Text = "ON"
+        button.BackgroundColor3 = Color3.fromRGB(138, 43, 226)
+    else
+        button.Text = "OFF"
+        button.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    end
+end
+
+local function findSwingRemote()
+    local path = { "Shared", "Universe", "Network", "RemoteEvent", "SwingMelee" }
+    local obj = ReplicatedStorage
+    for _, part in ipairs(path) do
+        obj = obj:FindFirstChild(part)
+        if not obj then
+            return nil
+        end
+    end
+    return obj
+end
+
+local swingRemote = findSwingRemote()
+local allowedWeapons = {
+    "Shovel",
+    "Sword",
+    "Pickaxe",
+    "Vampire Knife",
+    "Jade Sword",
+    "Tomahawk",
+    "Excalibur",
+    "Cavalry Sword",
+    "Spear",
+    "Spear of Longinus"
+}
+
+local function startFiring(tool)
+    if firing then return end
+    firing = true
+    currentTask = task.spawn(function()
+        while firing do
+            swingRemote = swingRemote or findSwingRemote()
+            if swingRemote then
+                local args = {
+                    tool,
+                    1767491059.30076,
+                    Vector3.new(0.409719854593277, -0.543113112449646, 0.7329104542732239)
+                }
+                swingRemote:FireServer(unpack(args))
+            end
+            task.wait()
+        end
+    end)
+end
+
+local function stopFiring()
+    firing = false
+    if currentTask then
+        task.cancel(currentTask)
+        currentTask = nil
+    end
+end
+
+local function hookTool(tool)
+    if tool:IsA("Tool") then
+        local equipConn = tool.Equipped:Connect(function()
+            startFiring(tool)
+        end)
+        local unequipConn = tool.Unequipped:Connect(function()
+            stopFiring()
+        end)
+        table.insert(autohitConnections, equipConn)
+        table.insert(autohitConnections, unequipConn)
+    end
+end
+
+local function hookAllTools()
+    local character = player.Character or player.CharacterAdded:Wait()
+    for _, weaponName in ipairs(allowedWeapons) do
+        local tool = character:FindFirstChild(weaponName) or player.Backpack:FindFirstChild(weaponName)
+        if tool then hookTool(tool) end
+    end
+    table.insert(autohitConnections, character.ChildAdded:Connect(function(child)
+        if table.find(allowedWeapons, child.Name) then
+            hookTool(child)
+        end
+    end))
+    table.insert(autohitConnections, player.Backpack.ChildAdded:Connect(function(child)
+        if table.find(allowedWeapons, child.Name) then
+            hookTool(child)
+        end
+    end))
+end
+
+local function disconnectAll()
+    for _, conn in ipairs(autohitConnections) do
+        pcall(function() conn:Disconnect() end)
+    end
+    autohitConnections = {}
+    stopFiring()
+end
+
+local function enableAutoHit()
+    if not autohitActive then
+        autohitActive = true
+        hookAllTools()
+        updateButtonVisual()
+    end
+end
+
+local function disableAutoHit()
+    if autohitActive then
+        autohitActive = false
+        disconnectAll()
+        updateButtonVisual()
+    end
+end
+
+local function toggleAutoHit()
+    if autohitActive then
+        disableAutoHit()
+    else
+        enableAutoHit()
+    end
+end
+
+button.MouseButton1Click:Connect(function()
+    toggleAutoHit()
+end)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.KeyCode == autohitKey then
+        toggleAutoHit()
+    end
+end)
+
+local AutoHitSection = Tabs.Main:Section({
+    Title = "Auto Hit",
+    Icon = "sword",
+    Desc = "Auto Hit Weapon Settings",
+    Opened = false,
+})
+
+AutoHitSection:Toggle({
+    Flag = "AutoHitShowGUI",
+    Title = "Show Auto Hit GUI",
+    Desc = "Show/Hide GUI Button",
+    Default = false,
+    Callback = function(state)
+        guiVisible = state
+        button.Visible = state
+    end
+})
+
+AutoHitSection:Input({
+    Flag = "AutoHitKeyBind",
+    Title = "KeyBind For PC",
+    Default = "H",
+    Callback = function(value)
+        local success, key = pcall(function()
+            return Enum.KeyCode[value:upper()]
+        end)
+        if success and key then
+            autohitKey = key
+        end
+    end
+})
+
+-- KILL AURA 
+
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+local CONFIG = {
+    enabled = false,
+    radius = 50,
+    height = 2,
+}
+
+local MOB_FOLDER_NAMES = {
+    "Zombies",
+    "Animals", 
+    "Enemies",
+    "RuntimeEntities",
+    "NightEnemies",
+    "Mobs",
+    "NPCs"
+}
+
+local currentTarget = nil
+local bodyPosition = nil
+local bodyGyro = nil
+local connection = nil
+
+local cachedFolders = {}
+local lastFolderScan = 0
+local lastTargetSearch = 0
+local heightCache = {}
+
+local FOLDER_SCAN_INTERVAL = 3
+local TARGET_SEARCH_INTERVAL = 0.15
+
+local function findMobFolders()
+    local now = tick()
+    if now - lastFolderScan < FOLDER_SCAN_INTERVAL and #cachedFolders > 0 then
+        local valid = true
+        for _, folder in ipairs(cachedFolders) do
+            if not folder or not folder.Parent then
+                valid = false
+                break
+            end
+        end
+        if valid then
+            return cachedFolders
+        end
+    end
+    
+    lastFolderScan = now
+    cachedFolders = {}
+    
+    for _, name in ipairs(MOB_FOLDER_NAMES) do
+        for _, obj in ipairs(workspace:GetDescendants()) do
+            if (obj:IsA("Folder") or obj:IsA("Model")) and obj.Name == name then
+                table.insert(cachedFolders, obj)
+            end
+        end
+    end
+    
+    return cachedFolders
+end
+
+local function getMobRootPart(mob)
+    return mob:FindFirstChild("HumanoidRootPart") 
+        or mob:FindFirstChild("Torso") 
+        or mob:FindFirstChild("Head")
+        or mob.PrimaryPart
+end
+
+local function getMobHeight(mob)
+    local mobId = mob.Name
+    if heightCache[mobId] then
+        return heightCache[mobId]
+    end
+    
+    local height = 5
+    local humanoid = mob:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        height = humanoid.HipHeight * 2 + 1
+    end
+    
+    heightCache[mobId] = height
+    return height
+end
+
+local function getPlayerHRP()
+    local char = player.Character
+    if char then
+        return char:FindFirstChild("HumanoidRootPart")
+    end
+    return nil
+end
+
+local function findClosestMob(hrp)
+    local folders = findMobFolders()
+    local hrpPos = hrp.Position
+    
+    local closest = nil
+    local closestDist = CONFIG.radius
+    
+    for _, folder in ipairs(folders) do
+        if folder and folder.Parent then
+            for _, child in ipairs(folder:GetChildren()) do
+                if child:IsA("Model") then
+                    local humanoid = child:FindFirstChildOfClass("Humanoid")
+                    local rootPart = getMobRootPart(child)
+                    
+                    if humanoid and rootPart and humanoid.Health > 0 then
+                        local dist = (rootPart.Position - hrpPos).Magnitude
+                        if dist <= closestDist then
+                            closestDist = dist
+                            closest = {
+                                model = child,
+                                humanoid = humanoid,
+                                rootPart = rootPart,
+                                height = getMobHeight(child)
+                            }
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    return closest
+end
+
+local function cleanup()
+    if bodyPosition then
+        bodyPosition:Destroy()
+        bodyPosition = nil
+    end
+    if bodyGyro then
+        bodyGyro:Destroy()
+        bodyGyro = nil
+    end
+end
+
+local function createBodyMovers(hrp)
+    cleanup()
+    
+    local bp = Instance.new("BodyPosition")
+    bp.MaxForce = Vector3.new(1e6, 1e6, 1e6)
+    bp.P = 50000
+    bp.D = 1000
+    bp.Parent = hrp
+    
+    local bg = Instance.new("BodyGyro")
+    bg.MaxTorque = Vector3.new(1e6, 1e6, 1e6)
+    bg.P = 50000
+    bg.D = 1000
+    bg.Parent = hrp
+    
+    return bp, bg
+end
+
+local function isTargetValid(hrp)
+    if not currentTarget then return false end
+    if not currentTarget.model or not currentTarget.model.Parent then return false end
+    if not currentTarget.humanoid then return false end
+    
+    local success, health = pcall(function()
+        return currentTarget.humanoid.Health
+    end)
+    if not success or health <= 0 then return false end
+    
+    if not currentTarget.rootPart or not currentTarget.rootPart.Parent then return false end
+    
+    local dist = (currentTarget.rootPart.Position - hrp.Position).Magnitude
+    if dist > CONFIG.radius * 1.5 then return false end
+    
+    return true
+end
+
+local function onFrame()
+    if not CONFIG.enabled then
+        cleanup()
+        currentTarget = nil
+        return
+    end
+    
+    local hrp = getPlayerHRP()
+    if not hrp then return end
+    
+    if not isTargetValid(hrp) then
+        currentTarget = nil
+    end
+    
+    local now = tick()
+    
+    if not currentTarget then
+        if now - lastTargetSearch >= TARGET_SEARCH_INTERVAL then
+            lastTargetSearch = now
+            currentTarget = findClosestMob(hrp)
+        end
+    end
+    
+    if currentTarget then
+        if not bodyPosition or bodyPosition.Parent ~= hrp then
+            bodyPosition, bodyGyro = createBodyMovers(hrp)
+        end
+        
+        local mobPos = currentTarget.rootPart.Position
+        local mobHeight = currentTarget.height
+        
+        local totalHeight = (mobHeight / 2) + CONFIG.height
+        local targetPos = mobPos + Vector3.new(0, totalHeight, 0)
+        
+        bodyPosition.Position = targetPos
+        
+        local lookAt = CFrame.lookAt(targetPos, mobPos)
+        local rotatedDown = lookAt * CFrame.Angles(math.rad(90), 0, 0)
+        bodyGyro.CFrame = rotatedDown
+    else
+        cleanup()
+    end
+end
+
+player.CharacterAdded:Connect(function()
+    cleanup()
+    currentTarget = nil
+    heightCache = {}
+    cachedFolders = {}
+    lastFolderScan = 0
+end)
+
+local KillAuraSection = Tabs.Main:Section({
+    Title = "Kill Aura",
+    Icon = "swords",
+    Desc = "Kill Aura Settings",
+    Opened = false,
+})
+
+KillAuraSection:Toggle({
+    Flag = "KillAuraEnabled",
+    Title = "Kill Aura",
+    Desc = "Don't use with aimbot",
+    Default = false,
+    Callback = function(state)
+        CONFIG.enabled = state
+        if not state then
+            cleanup()
+            currentTarget = nil
+        end
+    end
+})
+
+KillAuraSection:Slider({
+    Flag = "KillAuraRange",
+    Title = "Range",
+    Desc = "Detection range for mobs",
+    Step = 1,
+    Value = {Min = 1, Max = 200, Default = 50},
+    Suffix = " studs",
+    Callback = function(val)
+        CONFIG.radius = tonumber(val)
+    end
+})
+
+KillAuraSection:Slider({
+    Flag = "KillAuraHeight",
+    Title = "Height",
+    Desc = "Height offset above mob",
+    Step = 0.5,
+    Value = {Min = 0, Max = 10, Default = 2},
+    Suffix = " studs",
+    Callback = function(val)
+        CONFIG.height = tonumber(val)
+    end
+})
+
+connection = RunService.Heartbeat:Connect(onFrame)
+
+-- Gun aura 
+
+
+
+
+local gunAuraRunning = false
+local gunAuraTask = nil
+local gunAuraModsAntilagCon = nil
+
+local GunAuraSection = Tabs.Main:Section({
+    Title = "Gun Aura",
+    Icon = "crosshair",
+    Desc = "Auto Shoot Settings",
+    Opened = false,
+})
+
+GunAuraSection:Toggle({
+    Flag = "GunAuraEnabled",
+    Title = "Gun Aura",
+    Desc = "Auto Shoots Mobs With Guns",
+    Default = false,
+    Callback = function(state)
+        gunAuraRunning = state
+        if gunAuraRunning then
+            _G.DelayShot = 0.4
+            _G.ReachShot = 250
+            _G.ModsAntilag = {}
+
+            if gunAuraModsAntilagCon then
+                gunAuraModsAntilagCon:Disconnect()
+                gunAuraModsAntilagCon = nil
+            end
+            gunAuraModsAntilagCon = workspace.DescendantAdded:Connect(function(v)
+                if v:IsA("Model") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v:FindFirstChild("Head") and not game.Players:GetPlayerFromCharacter(v) then
+                    if v.Name == "Model_Unicorn" or v.Name == "Model_Horse" then return end
+                    if v.Humanoid.Health > 0 then
+                        table.insert(_G.ModsAntilag, v)
+                    end
+                end
+            end)
+            local TELEPORT_OFFSET = Vector3.new(0, 0, -2)
+
+            gunAuraTask = task.spawn(function()
+                while gunAuraRunning do
+                    local DistanceGunAura, ModsTargetShotHead, ModsTargetShotHumanoid = math.huge, nil, nil
+                    for i, v in pairs(_G.ModsAntilag) do
+                        if v:IsA("Model") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v:FindFirstChild("Head") and not game.Players:GetPlayerFromCharacter(v) then
+                            if v.Name == "Model_Unicorn" or v.Name == "Model_Horse" then
+                                continue
+                            end
+                            local DistanceGun = (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - v.HumanoidRootPart.Position).Magnitude
+                            if DistanceGun < DistanceGunAura and DistanceGun < _G.ReachShot and v.Humanoid.Health > 0 then
+                                ModsTargetShotHead, ModsTargetShotHumanoid, DistanceGunAura = v:FindFirstChild(_G.CharacterMods or "Head"), v.Humanoid, DistanceGun
+                            end
+                        end
+                    end
+                    if ModsTargetShotHead and ModsTargetShotHumanoid then
+                        _G.ModsShotgun = {}
+                        local ShotNow = {14, 8, 2, 5, 11, 17}
+                        for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+                            if v:FindFirstChild("ClientWeaponState") and v.ClientWeaponState:FindFirstChild("CurrentAmmo") then
+                                if v.ClientWeaponState.CurrentAmmo.Value ~= 0 then
+                                    if v.Name == "Shotgun" or v.Name == "Sawed-Off Shotgun" then
+                                        for _, index in pairs(ShotNow) do
+                                            _G.ModsShotgun[index] = ModsTargetShotHumanoid
+                                        end
+                                    else
+                                        _G.ModsShotgun["2"] = ModsTargetShotHumanoid
+                                    end
+                                    local behindHead = ModsTargetShotHead.Position + TELEPORT_OFFSET
+                                    game.ReplicatedStorage.Remotes.Weapon.Shoot:FireServer(
+                                        game.Workspace:GetServerTimeNow(),
+                                        v,
+                                        CFrame.new(behindHead, ModsTargetShotHead.Position),
+                                        _G.ModsShotgun
+                                    )
+                                    game.ReplicatedStorage.Remotes.Weapon.Reload:FireServer(game.Workspace:GetServerTimeNow(), v)
+                                end
+                            end
+                        end
+                    end
+                    task.wait(_G.DelayShot)
+                end
+            end)
+        else
+            if gunAuraTask then
+                task.cancel(gunAuraTask)
+                gunAuraTask = nil
+            end
+            if gunAuraModsAntilagCon then
+                gunAuraModsAntilagCon:Disconnect()
+                gunAuraModsAntilagCon = nil
+            end
+        end
+    end
+})
+
+
+
+
+-- Train Kill aura
+
+
+local trainKillAuraOn = false
+local trainKillAuraCon = nil
+local KILL_SIZE_ON = 900
+local originalSizes = {}
+
+local TrainKillAuraSection = Tabs.Main:Section({
+    Title = "Train Kill Aura",
+    Icon = "train",
+    Desc = "Train Kill Aura Settings",
+    Opened = false,
+})
+
+TrainKillAuraSection:Toggle({
+    Flag = "TrainKillAuraEnabled",
+    Title = "Train Kill Aura",
+    Desc = "When riding train you kill a lot of mobs",
+    Default = false,
+    Callback = function(state)
+        trainKillAuraOn = state
+        if trainKillAuraOn then
+            originalSizes = {}
+            for _, obj in pairs(workspace:GetChildren()) do
+                local functional = obj:FindFirstChild("Functional")
+                if functional then
+                    for _, child in pairs(functional:GetChildren()) do
+                        if child.Name == "KillHitbox" and child:IsA("BasePart") then
+                            originalSizes[child] = child.Size
+                            child.Size = Vector3.new(KILL_SIZE_ON, KILL_SIZE_ON, KILL_SIZE_ON)
+                        end
+                    end
+                end
+            end
+            trainKillAuraCon = game:GetService("RunService").RenderStepped:Connect(function()
+                for hitbox in pairs(originalSizes) do
+                    if hitbox and hitbox.Parent then
+                        hitbox.Size = Vector3.new(KILL_SIZE_ON, KILL_SIZE_ON, KILL_SIZE_ON)
+                    end
+                end
+            end)
+        else
+            if trainKillAuraCon then
+                trainKillAuraCon:Disconnect()
+                trainKillAuraCon = nil
+            end
+            for hitbox, origSize in pairs(originalSizes) do
+                if hitbox and hitbox.Parent then
+                    hitbox.Size = origSize
+                end
+            end
+            originalSizes = {}
+        end
+    end
+})
+
+TrainKillAuraSection:Slider({
+    Flag = "TrainKillAuraSize",
+    Title = "Kill Size Radius",
+    Desc = "Size of the kill hitbox",
+    Step = 10,
+    Value = {Min = 100, Max = 2000, Default = 900},
+    Suffix = " studs",
+    Callback = function(val)
+        KILL_SIZE_ON = tonumber(val)
+    end
+})
+
+
+-- TP TO TRAIN SIT 
+-- TP SECTIONS
+
+
+
+local TrainTeleportSection = Tabs.Teleport:Section({
+    Title = "Train Teleport",
+    Icon = "train",
+    Desc = "Train Teleport Settings",
+    Opened = false,
+})
+
+TrainTeleportSection:Button({
+    Title = "TP To Train Seat",
+    Desc = "Teleports to train conductor seat",
+    Callback = function()
+        local seated = false
+        local LocalPlayer = game.Players.LocalPlayer
+        local trainNames = {
+            "ghost",
+            "default",
+            "presidential",
+            "golden",
+            "passenger",
+            "armor",
+            "wooden",
+            "dracula",
+            "cattle"
+        }
+
+        task.spawn(function()
+            while true do
+                local seat = nil
+                local trainExists = false
+
+                for _, trainName in ipairs(trainNames) do
+                    local train = workspace:FindFirstChild(trainName)
+                    if train then
+                        trainExists = true
+                        if train:FindFirstChild("RequiredComponents")
+                            and train.RequiredComponents:FindFirstChild("Controls")
+                            and train.RequiredComponents.Controls:FindFirstChild("ConductorSeat")
+                        then
+                            local possibleSeat = train.RequiredComponents.Controls.ConductorSeat:FindFirstChild("VehicleSeat")
+                            if possibleSeat and possibleSeat:IsA("VehicleSeat") then
+                                seat = possibleSeat
+                                break
+                            end
+                        end
+                    end
+                end
+
+                if not trainExists then
+                    break
+                end
+
+                local humanoid = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
+                if seat and humanoid then
+                    seat:Sit(humanoid)
+                    task.wait(0.15)
+                    if seat.Occupant == humanoid then
+                        seated = true
+                        break
+                    end
+                end
+                task.wait(0.4)
+            end
+        end)
+    end
+})
+
+-- TP TO FORT
+
+local FortTeleportSection = Tabs.Teleport:Section({
+    Title = "Fort Teleport",
+    Icon = "castle",
+    Desc = "Fort Teleport Settings",
+    Opened = false,
+})
+
+FortTeleportSection:Button({
+    Title = "Tp To Fort",
+    Desc = "Teleports you to Fort",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/ringtaa/Tpfort.github.io/refs/heads/main/Tpfort.lua"))()
+    end,
+})
+
+-- TP TO HORSE
+
+
+local function getHorseNameList()
+    local horses = {}
+    local function findHorse(model, pathLabel)
+        if model and model:IsA("Model") and model.Name == "Model_Horse" then
+            local seat = model:FindFirstChildWhichIsA("VehicleSeat")
+            if seat then
+                local displayName = pathLabel or model:GetFullName()
+                table.insert(horses, { Name = displayName, Model = model, Seat = seat })
+            end
+        end
+    end
+    findHorse(workspace:FindFirstChild("Model_Horse"), "Workspace Horse")
+    local baseplates = workspace:FindFirstChild("Baseplates")
+    if baseplates then
+        for _, plateName in ipairs({"Baseplate16", "Baseplate24", "Baseplate30"}) do
+            local baseplate = baseplates:FindFirstChild(plateName)
+            if baseplate then
+                local center = baseplate:FindFirstChild("CenterBaseplate")
+                if center then
+                    local animals = center:FindFirstChild("Animals")
+                    if animals then
+                        findHorse(animals:FindFirstChild("Model_Horse"), plateName)
+                    end
+                end
+            end
+        end
+    end
+    local nameList, modelMap = {}, {}
+    for _, entry in pairs(horses) do
+        table.insert(nameList, entry.Name)
+        modelMap[entry.Name] = entry
+    end
+    table.insert(nameList, 1, "None")
+    return nameList, modelMap
+end
+
+local lastHorseMap = {}
+local selectedHorseName = "None"
+
+local horseNames, horseMap = getHorseNameList()
+lastHorseMap = horseMap
+selectedHorseName = "None"
+
+local HorseTeleportSection = Tabs.Teleport:Section({
+    Title = "Horse Teleport",
+    Icon = "horse",
+    Desc = "Horse Teleport Settings",
+    Opened = false,
+})
+
+_G.horseDropdownObj = HorseTeleportSection:Dropdown({
+    Flag = "HorseSelector",
+    Title = "Select Horse",
+    Desc = "Choose a horse to teleport to",
+    Values = horseNames,
+    Value = "None",
+    Multi = false,
+    AllowNone = true,
+    Callback = function(val)
+        selectedHorseName = val or "None"
+    end
+})
+
+HorseTeleportSection:Button({
+    Title = "Teleport to Horse",
+    Desc = "Teleports and sits on selected horse",
+    Callback = function()
+        if not selectedHorseName or selectedHorseName == "None" then
+            return
+        end
+        local entry = lastHorseMap[selectedHorseName]
+        if entry and entry.Seat then
+            local player = Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:FindFirstChildOfClass("Humanoid") or character:WaitForChild("Humanoid")
+            local hrp = character:WaitForChild("HumanoidRootPart")
+            hrp.CFrame = entry.Seat.CFrame + Vector3.new(0, 5, 0)
+            task.wait(0.13)
+            entry.Seat:Sit(humanoid)
+        end
+    end
+})
+
+HorseTeleportSection:Button({
+    Title = "Refresh Horses List",
+    Desc = "Refreshes the list of available horses",
+    Callback = function()
+        local newHorseNames, newHorseMap = getHorseNameList()
+        lastHorseMap = newHorseMap
+        selectedHorseName = "None"
+        if _G.horseDropdownObj then
+            _G.horseDropdownObj:Refresh(newHorseNames)
+            _G.horseDropdownObj:SetValue("None")
+        end
+    end
+})
+
+-- NOCLIP 
+
+
+local noclipConnection = nil
+
+local NoClipSection = Tabs.Other:Section({
+    Title = "No Clip",
+    Icon = "ghost",
+    Desc = "No Clip Settings",
+    Opened = false,
+})
+
+NoClipSection:Toggle({
+    Flag = "NoClipEnabled",
+    Title = "No Clip",
+    Desc = "Walk through objects",
+    Default = false,
+    Callback = function(state)
+        if state then
+            noclipConnection = game:GetService("RunService").Stepped:Connect(function()
+                local char = game:GetService("Players").LocalPlayer.Character
+                if char then
+                    for _, part in ipairs(char:GetDescendants()) do
+                        if part:IsA("BasePart") then
+                            part.CanCollide = false
+                        end
+                    end
+                end
+            end)
+        else
+            if noclipConnection then
+                noclipConnection:Disconnect()
+                noclipConnection = nil
+            end
+        end
+    end
+})
+
+-- INSTANT INTERACTION 
+
+
+local instantInteractConnection = nil
+
+local InstantInteractSection = Tabs.Other:Section({
+    Title = "Instant Interaction",
+    Icon = "zap",
+    Desc = "Instant Interaction Settings",
+    Opened = false,
+})
+
+InstantInteractSection:Toggle({
+    Flag = "InstantInteractionEnabled",
+    Title = "Instant Interaction",
+    Desc = "Proximity prompts will interact instantly",
+    Default = false,
+    Callback = function(state)
+        if state then
+            instantInteractConnection = game:GetService("ProximityPromptService").PromptButtonHoldBegan:Connect(function(prompt)
+                fireproximityprompt(prompt)
+            end)
+        else
+            if instantInteractConnection then
+                instantInteractConnection:Disconnect()
+                instantInteractConnection = nil
+            end
+        end
+    end
+})
+
+
+
+
+
+-- Fly
+
+local FlySection = Tabs.Other:Section({
+    Title = "Fly",
+    Icon = "plane",
+    Desc = "Fly Settings",
+    Opened = false,
+})
+
+FlySection:Button({
+    Title = "Turn Fly On",
+    Desc = "Only works if you're sitting on a chair or turret",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/ringtaa/fly.github.io/refs/heads/main/fly.lua"))()
+    end,
+})
+
+FlySection:Button({
+    Title = "Turn Fly Off",
+    Desc = "Disables fly mode",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/ringtaa/unfly.github.io/refs/heads/main/unfly.lua"))()
+    end,
+})
+
+
+
+local HttpService = game:GetService("HttpService")
+local function getRemote(name)
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local r = ReplicatedStorage:FindFirstChild("Remotes")
+    if r and r:FindFirstChild(name) then
+        return r[name]
+    end
+    local shared = ReplicatedStorage:FindFirstChild("Shared")
+    if shared then
+        local universe = shared:FindFirstChild("Universe")
+        if universe then
+            local network = universe:FindFirstChild("Network")
+            if network then
+                local remotePromise = network:FindFirstChild("RemotePromise")
+                if remotePromise then
+                    local remotes = remotePromise:FindFirstChild("Remotes")
+                    if remotes and remotes:FindFirstChild(name) then
+                        return remotes[name]
+                    end
+                end
+            end
+        end
+    end
+    return nil
+end
+
+local everything = _G.EVERYTHING or {}
+
+-- Auto Collect Section
+local allAutoCollectItems = everything.auto_collect or {}
+local selectedAutoCollectItems = {}
+local autoCollectEnabled = false
+local autoCollectThread = nil
+local waitTime = 0.1
+
+local AutoCollectSection = Tabs.Other:Section({
+    Title = "Auto Collect",
+    Icon = "package",
+    Desc = "Auto Collect Settings",
+    Opened = false,
+})
+
+AutoCollectSection:Dropdown({
+    Flag = "AutoCollectItems",
+    Title = "Select Items To Auto Collect",
+    Desc = "Choose items to automatically collect",
+    Values = allAutoCollectItems,
+    Value = {},
+    Multi = true,
+    AllowNone = true,
+    Callback = function(selected)
+        selectedAutoCollectItems = selected
+    end
+})
+
+AutoCollectSection:Toggle({
+    Flag = "AutoCollectEnabled",
+    Title = "Auto Collect",
+    Desc = "Automatically collects selected items",
+    Default = false,
+    Callback = function(state)
+        autoCollectEnabled = state
+        if state then
+            autoCollectThread = task.spawn(function()
+                while autoCollectEnabled do
+                    local activateRemote = getRemote("C_ActivateObject")
+                    if activateRemote then
+                        local runtimeItems = game.Workspace:FindFirstChild("RuntimeItems")
+                        if runtimeItems then
+                            for _, itemModel in ipairs(runtimeItems:GetChildren()) do
+                                if autoCollectEnabled and itemModel:IsA("Model") and table.find(selectedAutoCollectItems, itemModel.Name) then
+                                    local mainPart = itemModel.PrimaryPart or itemModel:FindFirstChildWhichIsA("BasePart") or itemModel
+                                    if mainPart and mainPart.Parent and mainPart.Parent == itemModel then
+                                        local suc, err = pcall(function()
+                                            activateRemote:FireServer(mainPart.Parent)
+                                        end)
+                                        if not suc and tostring(err):lower():find("exhaust") then
+                                            task.wait(1.5)
+                                        end
+                                        task.wait(waitTime)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                    task.wait(0.3)
+                end
+            end)
+        else
+            if autoCollectThread then
+                task.cancel(autoCollectThread)
+                autoCollectThread = nil
+            end
+        end
+    end
+})
+
+-- Auto Sack Section
+local availableAutoSackItems = everything.auto_sack or {}
+local selectedAutoSackItems = {}
+local autoSackEnabled = false
+local autoSackThread = nil
+
+local AutoSackSection = Tabs.Other:Section({
+    Title = "Auto Collect Sack",
+    Icon = "briefcase",
+    Desc = "Auto Sack Settings",
+    Opened = false,
+})
+
+AutoSackSection:Dropdown({
+    Flag = "AutoSackItems",
+    Title = "Select Auto Sack Items",
+    Desc = "Choose items to automatically sack",
+    Values = availableAutoSackItems,
+    Value = {},
+    Multi = true,
+    AllowNone = true,
+    Callback = function(selected)
+        selectedAutoSackItems = selected
+    end
+})
+
+AutoSackSection:Toggle({
+    Flag = "AutoSackEnabled",
+    Title = "Auto Items Sack",
+    Desc = "Automatically sacks selected items",
+    Default = false,
+    Callback = function(state)
+        autoSackEnabled = state
+        if autoSackEnabled then
+            autoSackThread = task.spawn(function()
+                while autoSackEnabled do
+                    local storeItemRemote = getRemote("StoreItem")
+                    if storeItemRemote then
+                        local runtimeItems = game.Workspace:FindFirstChild("RuntimeItems")
+                        if runtimeItems then
+                            for _, itemModel in ipairs(runtimeItems:GetChildren()) do
+                                if autoSackEnabled and itemModel:IsA("Model") and table.find(selectedAutoSackItems, itemModel.Name) and itemModel.PrimaryPart then
+                                    local suc, err = pcall(function()
+                                        storeItemRemote:FireServer(itemModel)
+                                    end)
+                                    if not suc and tostring(err):lower():find("exhaust") then
+                                        task.wait(1.5)
+                                    end
+                                    task.wait(waitTime)
+                                end
+                            end
+                        end
+                    end
+                    task.wait(2)
+                end
+            end)
+        else
+            if autoSackThread then
+                task.cancel(autoSackThread)
+                autoSackThread = nil
+            end
+        end
+    end
+})
+
+-- Bank Codes Section
+local notifiedBankCodes = {}
+local notifyCodesActive = false
+local notifyCodesTask = nil
+
+local BankCodesSection = Tabs.Other:Section({
+    Title = "Bank Codes",
+    Icon = "key",
+    Desc = "Bank Code Settings",
+    Opened = false,
+})
+
+BankCodesSection:Toggle({
+    Flag = "NotifyBankCodes",
+    Title = "Notify Bank Codes",
+    Desc = "Shows notification when bank code is found",
+    Default = false,
+    Callback = function(state)
+        notifyCodesActive = state
+        if state then
+            notifyCodesTask = task.spawn(function()
+                while notifyCodesActive do
+                    local entities = workspace:FindFirstChild("RuntimeEntities")
+                    if entities then
+                        for _, model in ipairs(entities:GetChildren()) do
+                            if model.Name == "Model_Banker" then
+                                local combo = model:FindFirstChild("Combo")
+                                if combo and combo.Value and combo.Value ~= "" then
+                                    if not notifiedBankCodes[combo.Value] then
+                                        notifiedBankCodes[combo.Value] = true
+                                    end
+                                end
+                            end
+                        end
+                    end
+                    task.wait(0.3)
+                end
+            end)
+        else
+            notifiedBankCodes = {}
+            notifyCodesActive = false
+            if notifyCodesTask then
+                task.cancel(notifyCodesTask)
+                notifyCodesTask = nil
+            end
+        end
+    end
+})
+
+local bankCodesParagraph = BankCodesSection:Paragraph({
+    Title = "Bank Codes",
+    Desc = "No bank codes detected yet.",
+    Locked = false,
+    Color = "Blue",
+})
+
+task.spawn(function()
+    while true do
+        local bankCodes = {}
+        local entities = workspace:FindFirstChild("RuntimeEntities")
+        if entities then
+            for _, model in ipairs(entities:GetChildren()) do
+                if model.Name == "Model_Banker" then
+                    local combo = model:FindFirstChild("Combo")
+                    if combo and combo.Value and combo.Value ~= "" then
+                        table.insert(bankCodes, combo.Value)
+                    end
+                end
+            end
+        end
+        if #bankCodes > 0 then
+            bankCodesParagraph:SetDesc("Found Bank Codes:\n" .. table.concat(bankCodes, "\n"))
+        else
+            bankCodesParagraph:SetDesc("No bank codes detected.")
+        end
+        task.wait(0.3)
+    end
+end)
+
+-- Outpost Teleports Section
+local outposts = {
+    { name = "Outpost 1", pos = Vector3.new(-179.63, 38.00, 20022.90) },
+    { name = "Outpost 2", pos = Vector3.new(-567.43, 38.40, 10089.98) },
+    { name = "Outpost 3", pos = Vector3.new(-552.69, 38.00, 177.92) },
+    { name = "Outpost 4", pos = Vector3.new(-158.59, 38.00, -9759.83) },
+    { name = "Outpost 5", pos = Vector3.new(51.74, 38.00, -19676.92) },
+    { name = "Outpost 6", pos = Vector3.new(-223.74, 38.00, -29599.47) },
+    { name = "Outpost 7", pos = Vector3.new(-589.73, 38.00, -39531.29) },
+}
+
+local function teleportAndSit(targetPosition)
+    local Players = game:GetService("Players")
+    local LocalPlayer = Players.LocalPlayer
+    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local humanoid = character:FindFirstChild("Humanoid") or character:FindFirstChildOfClass("Humanoid")
+    local root = character:FindFirstChild("HumanoidRootPart")
+    if not humanoid or not root then return end
+    root.CFrame = CFrame.new(targetPosition)
+    task.wait(1)
+    local nearestSeat, shortestDist = nil, math.huge
+    for _, obj in ipairs(workspace:GetDescendants()) do
+        if obj:IsA("Seat") or obj:IsA("VehicleSeat") then
+            local dist = (obj.Position - targetPosition).Magnitude
+            if dist < shortestDist and dist <= 25 then
+                nearestSeat, shortestDist = obj, dist
+            end
+        end
+    end
+    if nearestSeat then
+        humanoid.Sit = false
+        task.wait(0.2)
+        root.CFrame = nearestSeat.CFrame + Vector3.new(0, 2, 0)
+        task.wait(0.2)
+        humanoid.Sit = true
+    end
+end
+
+local OutpostSection = Tabs.Towns:Section({
+    Title = "Outpost Teleports",
+    Icon = "map-pin",
+    Desc = "Teleport to outposts",
+    Opened = false,
+})
+
+for i, outpost in ipairs(outposts) do
+    OutpostSection:Button({
+        Title = outpost.name,
+        Desc = "Teleport to " .. outpost.name,
+        Callback = function()
+            teleportAndSit(outpost.pos)
+        end
+    })
+end
+
+
+
+
+
+
+
+-- bond farm here below
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local PlayerDataController = require(ReplicatedStorage.Client.Universe.PlayerDataController)
+
+local function getBondCount()
+    local success, replica = pcall(function()
+        return PlayerDataController.getReplica()
+    end)
+    if success and replica and replica.Data and typeof(replica.Data) == "table" then
+        return replica.Data.bonds or 0
+    end
+    return nil
+end
+
+local BondTrackerSection = Tabs.Main:Section({
+    Title = "Bond Tracker",
+    Icon = "coins",
+    Desc = "Track your bonds",
+    Opened = false,
+})
+
+local bondParagraph = BondTrackerSection:Paragraph({
+    Title = "Bond Tracker",
+    Desc = "Bonds Currently: Not sure yet\nBonds Got This Run: 0",
+    Locked = false,
+})
+
+local runStart, runGained = nil, 0
+task.spawn(function()
+    while true do
+        local count = getBondCount()
+        if count == nil then
+            bondParagraph:SetDesc("Bonds Currently: Not sure yet\nBonds Got This Run: 0")
+            runStart = nil
+            runGained = 0
+        else
+            if runStart == nil then runStart = count end
+            runGained = count - runStart
+            bondParagraph:SetDesc(
+                "Bonds Currently: " .. tostring(count) ..
+                "\nBonds Got This Run: " .. math.max(0, runGained)
+            )
+        end
+        task.wait(0.5)
+    end
+end)
+
+-- Bypass Section
+local BypassSection = Tabs.Bypass:Section({
+    Title = "Cannon",
+    Icon = "target",
+    Desc = "Cannon related features",
+    Opened = false,
+})
+
+BypassSection:Button({
+    Title = "Bring Cannon",
+    Desc = "Brings cannon only works when near a cannon for example near fort constitution",
+    Callback = function()
+        local ok = pcall(function()
+            local function getBondPosition(bond)
+                if not bond then return nil end
+                if bond:IsA("BasePart") then
+                    return bond.Position
+                elseif bond:IsA("Model") then
+                    if bond.PrimaryPart then
+                        return bond.PrimaryPart.Position
+                    else
+                        for _, obj in ipairs(bond:GetDescendants()) do
+                            if obj:IsA("BasePart") then
+                                return obj.Position
+                            end
+                        end
+                        if typeof(bond:GetPivot()) == "CFrame" then
+                            return bond:GetPivot().Position
+                        end
+                    end
+                end
+                return nil
+            end
+
+            local bond = workspace:FindFirstChild("ObjectModels") and workspace.ObjectModels:FindFirstChild("bond") or nil
+            local bondPos = getBondPosition(bond)
+            if not bondPos then
+                error()
+            end
+
+            local candidateSeats = {}
+            for _, model in pairs(workspace:GetDescendants()) do
+                if model:IsA("Model") and model.Name == "Cannon" then
+                    local vehicleSeat = model:FindFirstChild("VehicleSeat")
+                    if vehicleSeat then
+                        table.insert(candidateSeats, vehicleSeat)
+                    end
+                end
+            end
+            do
+                local objModels = workspace:FindFirstChild("ObjectModels")
+                if objModels then
+                    local cannon = objModels:FindFirstChild("cannon")
+                    if cannon then
+                        local vehicleSeat = cannon:FindFirstChild("VehicleSeat")
+                        if vehicleSeat then
+                            table.insert(candidateSeats, vehicleSeat)
+                        end
+                    end
+                end
+            end
+
+            local closestCannonSeat = nil
+            local shortestDistance = math.huge
+            for _, seat in ipairs(candidateSeats) do
+                local distance = (seat.Position - bondPos).Magnitude
+                if distance < shortestDistance then
+                    shortestDistance = distance
+                    closestCannonSeat = seat
+                end
+            end
+
+            local character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+            local humanoid = character:FindFirstChild("Humanoid") or character:WaitForChild("Humanoid")
+
+            if closestCannonSeat then
+                character:PivotTo(closestCannonSeat.CFrame)
+                closestCannonSeat:Sit(humanoid)
+            else
+                error()
+            end
+        end)
+    end,
+})
+
+-- ESP Section
+local catMobsList = everything.esp_mobs or {}
+local mobESPSettings = {}
+
+for _, category in ipairs(catMobsList) do
+    local mobNames = {}
+    for _, mob in ipairs(category.mobs) do
+        table.insert(mobNames, mob.name)
+    end
+    mobESPSettings[category.category] = {
+        enabled = false,
+        selected = mobNames,
+        color = Color3.fromRGB(math.random(40,255), math.random(40,255), math.random(40,255))
+    }
+    
+    local ESPCategorySection = Tabs.Esp:Section({
+        Title = tostring(category.category) .. " ESP",
+        Icon = "eye",
+        Desc = "ESP settings for " .. category.category,
+        Opened = false,
+    })
+    
+    ESPCategorySection:Dropdown({
+        Flag = tostring(category.category) .. "ESPMobs",
+        Title = tostring(category.category) .. " Mobs",
+        Desc = "Select mobs to show ESP for",
+        Values = mobNames,
+        Value = mobNames,
+        Multi = true,
+        AllowNone = true,
+        Callback = function(v)
+            mobESPSettings[category.category].selected = v
+        end
+    })
+    
+    ESPCategorySection:Colorpicker({
+        Flag = tostring(category.category) .. "ESPColor",
+        Title = tostring(category.category) .. " ESP Color",
+        Desc = "Choose ESP highlight color",
+        Default = mobESPSettings[category.category].color,
+        Callback = function(color)
+            mobESPSettings[category.category].color = color
+        end
+    })
+    
+    ESPCategorySection:Toggle({
+        Flag = tostring(category.category) .. "ESPEnabled",
+        Title = "Enable " .. tostring(category.category) .. " ESP",
+        Desc = "Toggle ESP for this category",
+        Default = false,
+        Callback = function(val)
+            mobESPSettings[category.category].enabled = val
+        end
+    })
+end
+
+local function findByPath(root, relPath)
+    local ptr = root
+    for seg in string.gmatch(relPath, "[^%.]+") do
+        ptr = ptr:FindFirstChild(seg)
+        if not ptr then return nil end
+    end
+    return ptr
+end
+
+local function createOrUpdateESP(mobModel, color, label)
+    if not mobModel or not mobModel:IsA("Model") then return end
+    local targetPart = mobModel:FindFirstChild("Head") or mobModel.PrimaryPart or mobModel:FindFirstChildWhichIsA("BasePart")
+    if not targetPart then return end
+    local hl = mobModel:FindFirstChild("MobESPHL")
+    if not hl then
+        hl = Instance.new("Highlight")
+        hl.Name = "MobESPHL"
+        hl.Parent = mobModel
+        hl.Adornee = mobModel
+    end
+    hl.FillColor = color
+    hl.OutlineColor = Color3.fromRGB(255,255,255)
+    hl.FillTransparency = 0.25
+    hl.OutlineTransparency = 0
+    local bbName = "ZinerHubESPLabel"
+    local bb = targetPart:FindFirstChild(bbName)
+    if not bb then
+        bb = Instance.new("BillboardGui")
+        bb.Name = bbName
+        bb.Adornee = targetPart
+        bb.AlwaysOnTop = true
+        bb.Size = UDim2.new(0, 80, 0, 18)
+        bb.StudsOffset = Vector3.new(0, 3.5, 0)
+        bb.Parent = targetPart
+        local txt = Instance.new("TextLabel")
+        txt.Name = "Label"
+        txt.AnchorPoint = Vector2.new(0.5, 0.5)
+        txt.Position = UDim2.new(0.5, 0, 0.5, 0)
+        txt.Size = UDim2.new(1, 0, 1, 0)
+        txt.BackgroundTransparency = 1
+        txt.TextStrokeTransparency = 0.3
+        txt.Font = Enum.Font.SourceSansBold
+        txt.TextScaled = true
+        txt.Text = label or mobModel.Name
+        txt.TextColor3 = color
+        txt.Parent = bb
+    else
+        local txt = bb:FindFirstChild("Label")
+        if txt then
+            txt.Text = label or mobModel.Name
+            txt.TextColor3 = color
+        end
+    end
+end
+
+local function removeESP(mobModel)
+    if not mobModel or not mobModel:IsA("Model") then return end
+    local hl = mobModel:FindFirstChild("MobESPHL")
+    if hl then hl:Destroy() end
+    local targetPart = mobModel:FindFirstChild("Head") or mobModel.PrimaryPart or mobModel:FindFirstChildWhichIsA("BasePart")
+    if targetPart then
+        local bb = targetPart:FindFirstChild("ZinerHubESPLabel")
+        if bb then bb:Destroy() end
+    end
+end
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    for _, category in ipairs(catMobsList) do
+        local settings = mobESPSettings[category.category]
+        for _, mob in ipairs(category.mobs) do
+            for _, path in ipairs(mob.paths) do
+                local folder = findByPath(workspace, path)
+                if folder then
+                    for _, child in ipairs(folder:GetChildren()) do
+                        if child.Name == mob.model then
+                            if settings.enabled and table.find(settings.selected, mob.name) then
+                                createOrUpdateESP(child, settings.color, mob.name)
+                            else
+                                removeESP(child)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+
+Tabs.Credits:Button({
+    Title = "Click To Copy The Discord Server Link",
+    Callback = function()
+        setclipboard("https://discord.gg/sKeDcKDwhZ")
+        WindUI:Notify({
+            Title = "Copied!",
+            Content = "Discord invite copied to clipboard.",
+            Duration = 3,
+        })
+    end,
+})
+
+
+Tabs.Credits:Divider()
+
+Tabs.Credits:Paragraph({
+    Title = "PLEASE JOIN THE DISCORD SERVER",
+    Desc = "Join the Discord server! Be part of huge events, get early access to scripts, share ideas, report bugs, and connect with the community. The key is completely keyless, and your feedback helps make the scripts even better. donâ€™t miss out!",
+    Color = "Green",
+    Locked = false,
+})
+
+
+
+
+
+local contributors = everything.contributors or {}
+
+if contributors and #contributors > 0 then
+    local descLines = {}
+    for _, c in ipairs(contributors) do
+        table.insert(descLines, (c.name or "Unknown") .. " | Role: " .. (c.role or "Contributor"))
+    end
+    local desc = table.concat(descLines, "\n\n")
+    Tabs.Credits:Paragraph({
+        Title = "Contributors",
+        Desc = desc,
+        Color = "Green",
+        Locked = false,
+    })
+else
+    Tabs.Credits:Paragraph({
+        Title = "Contributors",
+        Desc = "Unable to load contributors list.",
+        Color = "Red",
+        Locked = false,
+    })
+end
+
+local videoLink = ""
+
+Tabs.Video:Paragraph({
+    Title = "Become a Content Creator!",
+    Desc = "If you upload a video or short (YouTube or TikTok) about the script, you can be featured as a content creator!\n\n- DM Kaibeo on Discord after uploading\n- Your video/channel will be shared in the community showcase channel\n- Get the Content Creator role and access private channels\n- Every week, we will give out a prize to a random person who uploads a YouTube Short, TikTok video/short, or a regular video about the script!\nYou don't need lots of subs or viewsâ€”just make an effort and you'll be included!\n\nTo get Top Content Creator you need to get at least 10,000 views on a single video with the script!",
+    Locked = false,
+})
+
+Tabs.Video:Divider()
+
+local creators = everything.content_creators or {}
+
+if creators and #creators > 0 then
+    local topLines = {}
+    local creatorLines = {}
+    for _, c in ipairs(creators) do
+        if tostring(c.role):lower() == "top creator" then
+            table.insert(topLines, (c.name or "Unknown"))
+        else
+            table.insert(creatorLines, (c.name or "Unknown"))
+        end
+    end
+    local topdesc = (#topLines > 0) and table.concat(topLines, "\n") or "No top content creators yet."
+    local creatordesc = (#creatorLines > 0) and table.concat(creatorLines, "\n") or "No content creators yet."
+    Tabs.Video:Paragraph({
+        Title = "Top Content Creators",
+        Desc = topdesc,
+        Color = "Green",
+        Locked = false,
+    })
+    Tabs.Video:Paragraph({
+        Title = "Content Creators",
+        Desc = creatordesc,
+        Color = "Red",
+        Locked = false,
+    })
+else
+    Tabs.Video:Paragraph({
+        Title = "Content Creators",
+        Desc = "Unable to load content creators list.",
+        Color = "Red",
+        Locked = false,
+    })
+end
+
+
+Tabs.Video:Paragraph({
+    Title = "Become a Clipper!",
+    Desc = "If you want to become a clipper for Kaibeo dm me aswell so basically you will upload youtube shorts or tiktok shorts showcasing the scripts and just make them fast paced you must have some iq to do this job and know how to edit and make good titles and get good views and also you can have any subs amount it dosent matter if new channel or no but yea the clipper role is one of the best roles in the discord server aswell.",
+    Locked = false,
+})
+
+-- add the esp and also add the bring items like make it a json and make the auto collect and auto remote or whatever into other tab aswell
+
+
+task.spawn(function()
+    task.wait(2)
+
+    local content = "This Script might take a little bit to load."
+    local duration = 5
+
+    pcall(function()
+        WindUI:Notify({
+            Title = "Loading...",
+            Content = content,
+            Duration = duration,
+            Icon = "loader"
+        })
+    end)
+
+    local delaySeconds = math.random(60, 300)
+    task.wait(delaySeconds)
+    pcall(function()
+        WindUI:Notify({
+            Title = "Discord Server",
+            Content = "Please join the offical discord server for more scripts! If you're a content creator, make a video on this script and we will post it",
+            Duration = 9,
+            Icon = "youtube"
+        })
+    end)
+end)
+
+
+task.spawn(function()
+    task.wait(1)
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/erewe23/eoogeg.github.io/refs/heads/main/oege.lua"))()
+end)
